@@ -5,7 +5,7 @@ import masks
 
 
 def mask_account_card(mask_account: str) -> Any:
-    """Функция принятия счетов или карт"""
+    """Функция обработки счетов или карт"""
     bank_account = "Счет"
     bank_account_lower = bank_account.lower()
     if bank_account_lower in mask_account:
