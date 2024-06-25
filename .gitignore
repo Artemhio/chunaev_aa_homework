@@ -163,3 +163,4 @@ cython_debug/
 .flake8
 poetry.lock
 pyproject.toml
+README.md
