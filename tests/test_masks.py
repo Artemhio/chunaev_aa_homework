@@ -1,6 +1,10 @@
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import pytest
 
-from src.masks import get_mask_card_number, get_mask_account
+from src import get_mask_card_number, get_mask_account
 
 
 # Тесты для маскировки карт
@@ -30,9 +34,9 @@ def test_get_mask_account_non_digit():
 # Тест на граничное условие для карт
 def test_card_edge_cases():
     assert get_mask_card_number("") is None  # Пустая строка
-    assert get_mask_card_number(None) is None  # None (опционально)
+    assert get_mask_card_number(None) is None
 
 # Тест на граничное условие для счетов
 def test_account_edge_cases():
     assert get_mask_account("") is None  # Пустая строка
-    assert get_mask_account(None) is None  # None (опционально)
+    assert get_mask_account(None) is None
