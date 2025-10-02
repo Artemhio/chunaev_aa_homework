@@ -1,20 +1,23 @@
 from datetime import datetime
-from typing import Any, Union
+from typing import Union
 
 from . import masks
+
 
 def mask_account_card(mask_account: str) -> Union[str, None]:
     """Функция обработки счетов или карт"""
     if "счет" in mask_account.lower():
         digits = "".join(filter(str.isdigit, mask_account))[-20:]
-        masked = get_mask_account(digits)
-        # сохранить префикс ("Счет", "сЧеТ", как в исходной строке)
+        masked = masks.get_mask_account(digits)
+        if masked is None:
+            return None
         prefix = mask_account.split()[0]
         return f"{prefix} {masked}"
     else:
         digits = "".join(filter(str.isdigit, mask_account))[-16:]
-        masked = get_mask_card_number(digits)
-        # сохранить префикс (например "Visa Platinum")
+        masked = masks.get_mask_card_number(digits)
+        if masked is None:
+            return None
         prefix = " ".join(mask_account.split()[:-1])
         return f"{prefix} {masked}"
 
