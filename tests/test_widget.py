@@ -1,36 +1,70 @@
 import pytest
-
-import sys
-
-import os
-
 from src.widget import mask_account_card, get_data
 
-# Тестовые данные
-SAMPLE_CARD = "Visa Platinum 1234567890123456"
-SAMPLE_ACCOUNT = "Счет 12345678901234567890"
-SHORT_ACCOUNT = "Счет 123"
+# ================================
+# Фикстура для повторяющихся данных
+# ================================
+@pytest.fixture
+def sample_data():
+    return {
+        "card": "Visa Platinum 1234567890123456",
+        "account": "Счет 12345678901234567890",
+        "short_account": "123",
+        "case_insensitive_account": "сЧеТ 12345678901234567890"
+    }
 
-# Тесты для mask_account_card
-def test_mask_card():
-    assert mask_account_card(SAMPLE_CARD) == "Visa Platinum 1234 56** **** 3456"
 
-def test_mask_account():
-    assert mask_account_card(SAMPLE_ACCOUNT) == "Счет **7890"
+# ================================
+# Тест маскировки карт с параметризацией
+# ================================
+@pytest.mark.parametrize(
+    "input_card, expected_masked",
+    [
+        ("Visa Platinum 1234567890123456", "Visa Platinum 1234 56** **** 3456"),
+        ("MasterCard 9876543210987654", "MasterCard 9876 54** **** 7654"),
+    ]
+)
+def test_mask_card_param(input_card, expected_masked):
+    assert mask_account_card(input_card) == expected_masked
 
-def test_mask_invalid_account():
-    assert mask_account_card(SHORT_ACCOUNT) is None
 
-def test_mask_case_insensitive():
-    assert mask_account_card("сЧеТ 12345678901234567890") == "сЧеТ **7890"
+# ================================
+# Тест маскировки счетов с параметризацией
+# ================================
+@pytest.mark.parametrize(
+    "input_account, expected_masked",
+    [
+        ("Счет 12345678901234567890", "Счет **7890"),
+        ("СЧЕТ 09876543210987654321", "СЧЕТ **4321"),
+    ]
+)
+def test_mask_account_param(input_account, expected_masked):
+    assert mask_account_card(input_account) == expected_masked
 
-# Тесты для get_data
-def test_date_conversion():
-    assert get_data("2023-10-05T16:20:00.000000Z") == "05.10.2023"
 
-def test_date_with_microseconds():
-    assert get_data("2022-12-31T23:59:59.999999Z") == "31.12.2022"
+# ================================
+# Тесты с фикстурой (твой старый стиль)
+# ================================
+def test_mask_account_fixture(sample_data):
+    assert mask_account_card(sample_data["account"]) == "Счет **7890"
+    assert mask_account_card(sample_data["short_account"]) is None
+    assert mask_account_card(sample_data["case_insensitive_account"]) == "сЧеТ **7890"
+
+
+# ================================
+# Тесты даты с параметризацией
+# ================================
+@pytest.mark.parametrize(
+    "input_date, expected_output",
+    [
+        ("2023-03-22T10:45:12.123456Z", "22.03.2023"),
+        ("2022-12-01T00:00:00.000000Z", "01.12.2022"),
+    ]
+)
+def test_date_conversion_param(input_date, expected_output):
+    assert get_data(input_date) == expected_output
+
 
 def test_invalid_date_format():
     with pytest.raises(ValueError):
-        get_data("2023/10/05 16:20:00")
+        get_data("01.01.2023")
