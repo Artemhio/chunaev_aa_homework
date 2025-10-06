@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 import pytest
 
-from src import get_mask_card_number, get_mask_account
+from chunaev_aa_homework.masks import get_mask_card_number, get_mask_account
 
 
 # Тесты для маскировки карт

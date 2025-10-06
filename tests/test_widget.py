@@ -1,5 +1,5 @@
 import pytest
-from src.widget import mask_account_card, get_data
+from chunaev_aa_homework.widget import mask_account_card, get_data
 
 # ================================
 # Фикстура для повторяющихся данных

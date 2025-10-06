@@ -1,7 +1,7 @@
 import pytest
 from datetime import datetime
 
-from src.processing import filter_by_state, sort_by_date
+from chunaev_aa_homework.processing import filter_by_state, sort_by_date
 
 
 # Фикстура с тестовыми данными

@@ -4,7 +4,7 @@ def get_mask_card_number(number_card: str) -> str | None:
         return None
     if number_card.isdigit() and len(number_card) == 16:
         return (
-            f"{number_card[:4]} {number_card[4:6]}** ****"
+            f"{number_card[:4]} {number_card[4:6]}** **** "
             f"{number_card[12:]}"
         )
     return None
