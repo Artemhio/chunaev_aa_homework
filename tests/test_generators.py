@@ -6,6 +6,8 @@ from chunaev_aa_homework import (
 )
 
 # ---------- фикстура с данными ----------
+
+
 @pytest.fixture
 def sample_transactions():
     return [

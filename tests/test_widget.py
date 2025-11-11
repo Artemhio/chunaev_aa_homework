@@ -4,6 +4,8 @@ from chunaev_aa_homework.widget import mask_account_card, get_data
 # ================================
 # Фикстура для повторяющихся данных
 # ================================
+
+
 @pytest.fixture
 def sample_data():
     return {
