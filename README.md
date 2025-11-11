@@ -16,6 +16,42 @@
 - сортировать операции по дате (по возрастанию/убыванию);
 - фильтровать операции по статусу.
 
+## Новый модуль: `generators`
+
+Добавлен модуль `generators`, который помогает работать с большим количеством транзакций с помощью генераторов.
+
+Функции модуля:
+
+- `filter_by_currency(transactions, currency_code="USD")`  
+  Возвращает только те транзакции, где валюта совпадает с указанной.
+
+- `transaction_descriptions(transactions)`  
+  Генератор, который по очереди возвращает описание каждой операции.  
+  Пропускает пустые описания и записи без данных об операции.
+
+- `card_number_generator(start, end)`  
+  Генерирует номера банковских карт в формате `XXXX XXXX XXXX XXXX`  
+  в заданном диапазоне (включительно).  
+  Например: `"0000 0000 0000 0001"`.
+
+### Пример использования:
+
+```python
+from chunaev_aa_homework import (
+    filter_by_currency,
+    transaction_descriptions,
+    card_number_generator,
+)
+
+transactions = [
+    {"operationAmount": {"amount": "100.00", "currency": {"code": "USD"}}, "description": "Перевод"},
+    {"operationAmount": {"amount": "250.00", "currency": {"code": "RUB"}}, "description": "Оплата"},
+]
+
+print(list(filter_by_currency(transactions, "USD")))
+print(list(transaction_descriptions(transactions)))
+print(list(card_number_generator(1, 3)))
+
 ## Установка
 Склонировать репозиторий:
 
