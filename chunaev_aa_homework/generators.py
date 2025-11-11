@@ -20,16 +20,17 @@ def filter_by_currency(
             continue
 
 
-def transaction_descriptions(
-    transactions: Iterable[Dict[str, Any]]
-) -> Iterator[str]:
-    """
-    Генератор, который возвращает описание (description) каждой транзакции.
-    Пустые или отсутствующие описания пропускаются.
-    """
+def transaction_descriptions(transactions):
+    """Генератор, который возвращает описания операций с валютой."""
     for tx in transactions:
-        desc = tx.get("description")
-        if isinstance(desc, str) and desc:
+        desc = tx.get("description", "").strip()
+        currency = (
+            tx.get("operationAmount", {})
+              .get("currency", {})
+              .get("code", "")
+              .strip()
+        )
+        if desc and currency:
             yield desc
 
 
@@ -61,4 +62,3 @@ def card_number_generator(start: int, end: int) -> Iterator[str]:
 
     for n in range(start, end + 1):
         yield _format_card_number(n)
-
