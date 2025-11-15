@@ -1,8 +1,9 @@
 import pytest
+
 from chunaev_aa_homework import (
+    card_number_generator,
     filter_by_currency,
     transaction_descriptions,
-    card_number_generator,
 )
 
 # ---------- фикстура с данными ----------

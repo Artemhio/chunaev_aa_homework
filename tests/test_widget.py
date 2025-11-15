@@ -1,5 +1,6 @@
 import pytest
-from chunaev_aa_homework.widget import mask_account_card, get_data
+
+from chunaev_aa_homework.widget import get_data, mask_account_card
 
 # ================================
 # Фикстура для повторяющихся данных
@@ -12,7 +13,7 @@ def sample_data():
         "card": "Visa Platinum 1234567890123456",
         "account": "Счет 12345678901234567890",
         "short_account": "123",
-        "case_insensitive_account": "сЧеТ 12345678901234567890"
+        "case_insensitive_account": "сЧеТ 12345678901234567890",
     }
 
 
@@ -24,7 +25,7 @@ def sample_data():
     [
         ("Visa Platinum 1234567890123456", "Visa Platinum 1234 56** **** 3456"),
         ("MasterCard 9876543210987654", "MasterCard 9876 54** **** 7654"),
-    ]
+    ],
 )
 def test_mask_card_param(input_card, expected_masked):
     assert mask_account_card(input_card) == expected_masked
@@ -38,7 +39,7 @@ def test_mask_card_param(input_card, expected_masked):
     [
         ("Счет 12345678901234567890", "Счет **7890"),
         ("СЧЕТ 09876543210987654321", "СЧЕТ **4321"),
-    ]
+    ],
 )
 def test_mask_account_param(input_account, expected_masked):
     assert mask_account_card(input_account) == expected_masked
@@ -61,7 +62,7 @@ def test_mask_account_fixture(sample_data):
     [
         ("2023-03-22T10:45:12.123456Z", "22.03.2023"),
         ("2022-12-01T00:00:00.000000Z", "01.12.2022"),
-    ]
+    ],
 )
 def test_date_conversion_param(input_date, expected_output):
     assert get_data(input_date) == expected_output
