@@ -162,6 +162,7 @@ cython_debug/
 .idea/
 .flake8
 
-
+# Environment
+.env
 
 README.md

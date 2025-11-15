@@ -1,8 +1,9 @@
 import os
 import sys
-from chunaev_aa_homework.masks import get_mask_card_number, get_mask_account
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from chunaev_aa_homework.masks import get_mask_account, get_mask_card_number
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 # Тесты для маскировки карт
