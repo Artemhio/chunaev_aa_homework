@@ -162,6 +162,10 @@ cython_debug/
 .idea/
 .flake8
 
+logs/*.log
 
+# Environment
+.env
 
 README.md
+kipping...

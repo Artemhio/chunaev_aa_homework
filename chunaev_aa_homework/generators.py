@@ -11,9 +11,7 @@ def filter_by_currency(
     """
     for tx in transactions:
         try:
-            code = tx.get("operationAmount", {}) \
-                     .get("currency", {}) \
-                     .get("code")
+            code = tx.get("operationAmount", {}).get("currency", {}).get("code")
             if code == currency_code:
                 yield tx
         except AttributeError:
@@ -25,10 +23,7 @@ def transaction_descriptions(transactions):
     for tx in transactions:
         desc = tx.get("description", "").strip()
         currency = (
-            tx.get("operationAmount", {})
-              .get("currency", {})
-              .get("code", "")
-              .strip()
+            tx.get("operationAmount", {}).get("currency", {}).get("code", "").strip()
         )
         if desc and currency:
             yield desc
