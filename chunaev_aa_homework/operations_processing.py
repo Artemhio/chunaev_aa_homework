@@ -14,6 +14,9 @@ def process_bank_search(
     """
     Ищет операции по подстроке в описании с использованием re.
 
+    Поиск нечувствителен к регистру и не требует точного совпадения
+    целого слова. Например, строка поиска "карта" найдёт "карту".
+
     :param data: список словарей с транзакциями
     :param search: строка для поиска в поле description
     :return: список операций, где description содержит строку поиска
@@ -39,6 +42,9 @@ def process_bank_operations(
     """
     Подсчитывает количество операций по категориям на основе description.
 
+    Для простого учёта разных форм слова (например, "связь" и "связи")
+    категория нормализуется за счёт удаления мягкого знака на конце.
+
     :param data: список словарей с транзакциями
     :param categories: список категорий
     :return: словарь {категория: количество}
@@ -47,13 +53,19 @@ def process_bank_operations(
         return {}
 
     counter: Counter[str] = Counter()
-    lowered = {cat.lower(): cat for cat in categories}
+
+    # ключ: нормализованная категория (в нижнем регистре),
+    # значение: исходная категория
+    normalized: Dict[str, str] = {}
+    for category in categories:
+        key = category.lower().rstrip("ь")
+        normalized[key] = category
 
     for transaction in data:
         description = transaction.get("description", "").lower()
 
-        for lower_cat, original in lowered.items():
-            if lower_cat in description:
+        for norm_key, original in normalized.items():
+            if norm_key and norm_key in description:
                 counter[original] += 1
 
     return {category: counter.get(category, 0) for category in categories}
