@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import Any, Dict, List
 
 from chunaev_aa_homework.operations_processing import (
-    process_bank_operations,
     process_bank_search,
 )
 from chunaev_aa_homework.utils_io import (

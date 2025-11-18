@@ -56,4 +56,4 @@ def process_bank_operations(
             if lower_cat in description:
                 counter[original] += 1
 
-    return {category: counter.get(category, 0) for category in categories}\
+    return {category: counter.get(category, 0) for category in categories}
