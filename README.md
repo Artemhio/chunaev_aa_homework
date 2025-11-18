@@ -70,6 +70,18 @@ print(list(filter_by_currency(transactions, "USD")))
 print(list(transaction_descriptions(transactions)))
 print(list(card_number_generator(1, 3)))
 
+## Работа с CSV и Excel
+
+Проект умеет считывать финансовые операции из файлов форматов
+CSV и Excel.
+
+Новые функции находятся в модуле `utils_io`:
+
+- `read_csv_operations(path)` — читает CSV-файл и возвращает список
+  словарей с транзакциями.
+- `read_xlsx_operations(path)` — читает Excel-файл и возвращает список
+  словарей с транзакциями.
+
 ## Установка
 Склонировать репозиторий:
 
