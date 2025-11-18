@@ -2,6 +2,7 @@ import json
 import logging
 from pathlib import Path
 
+
 LOG_DIR = Path(__file__).resolve().parents[1] / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
@@ -53,3 +54,12 @@ def load_transactions(path: str) -> list[dict]:
 
     logger.info("Успешно прочитан файл. Количество транзакций: %d", len(data))
     return data
+
+
+def read_json(path: str | Path):
+    """
+    Простой читатель JSON-файла.
+    Возвращает то, что вернул json.load (словарь, список и т.п.).
+    """
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
