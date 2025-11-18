@@ -1,8 +1,6 @@
 import json
 import logging
 from pathlib import Path
-from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 
 LOG_DIR = Path(__file__).resolve().parents[1] / "logs"
@@ -58,11 +56,10 @@ def load_transactions(path: str) -> list[dict]:
     return data
 
 
-def read_json(path: str | Path) -> Any:
+def read_json(path: str | Path):
     """
     Простой читатель JSON-файла.
     Возвращает то, что вернул json.load (словарь, список и т.п.).
     """
     with open(path, encoding="utf-8") as f:
         return json.load(f)
-
