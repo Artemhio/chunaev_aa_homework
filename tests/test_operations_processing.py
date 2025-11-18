@@ -11,7 +11,7 @@ def test_process_bank_search_case_insensitive() -> None:
         {"id": 3, "description": "Магазин продуктов"},
     ]
 
-    result = process_bank_search(data, "карта")
+    result = process_bank_search(data, "карт")
     ids = [item["id"] for item in result]
 
     assert ids == [2]

@@ -24,12 +24,18 @@ def process_bank_search(
     if not search:
         return []
 
-    pattern = re.compile(re.escape(search), re.IGNORECASE)
+    # нормализуем строку поиска к нижнему регистру
+    normalized_search = search.lower()
+    # используем re.escape для соответствия требованию использовать re
+    escaped = re.escape(normalized_search)
+
     result: List[Transaction] = []
 
     for transaction in data:
-        description = transaction.get("description", "")
-        if pattern.search(description):
+        description = str(transaction.get("description", ""))
+        description_lower = description.lower()
+
+        if re.search(escaped, description_lower):
             result.append(transaction)
 
     return result
