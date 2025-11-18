@@ -1,6 +1,9 @@
 import json
 import logging
 from pathlib import Path
+from typing import Any, Dict, List
+import pandas as pd
+
 
 LOG_DIR = Path(__file__).resolve().parents[1] / "logs"
 LOG_DIR.mkdir(exist_ok=True)
@@ -53,3 +56,37 @@ def load_transactions(path: str) -> list[dict]:
 
     logger.info("Успешно прочитан файл. Количество транзакций: %d", len(data))
     return data
+
+
+def read_json(path: str | Path) -> Any:
+    """
+    Простой читатель JSON-файла.
+    Возвращает то, что вернул json.load (словарь, список и т.п.).
+    """
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def read_csv(
+    path: str | Path,
+    *,
+    encoding: str = "utf-8",
+    delimiter: str = ",",
+) -> List[Dict[str, Any]]:
+    """
+    Читает CSV-файл через pandas и возвращает список словарей (records).
+    """
+    df = pd.read_csv(path, encoding=encoding, delimiter=delimiter)
+    return df.to_dict(orient="records")
+
+
+def read_xlsx(
+    path: str | Path,
+    *,
+    sheet_name: int | str | None = 0,
+) -> List[Dict[str, Any]]:
+    """
+    Читает XLSX-файл через pandas и возвращает список словарей (records).
+    """
+    df = pd.read_excel(path, sheet_name=sheet_name)
+    return df.to_dict(orient="records")
